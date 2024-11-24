@@ -1,5 +1,6 @@
 
 const { twiml: { MessagingResponse } } = require('twilio');
+const Contact = require('../../models/contact');
 
 
 
@@ -11,6 +12,29 @@ const recieveTextMessage = async  (req, res) => {
   const senderNumber = req.body.From;   // Sender's phone number
 
   console.log(`Message from ${senderNumber}: ${incomingMessage}`);
+
+  const adminNumber = '7325514480'; 
+  const sendPrefix = 'Send:'; 
+
+    if (senderNumber === adminNumber && incomingMessage.startsWith(sendPrefix)){
+        const messageToSend = incomingMessage.slice(sendPrefix.length).trim()
+        try{
+            const contacts = await axios.get('/contacts'); 
+            const cellNumbers = contacts.data.map(contact => contact.phone.cell).filter(cell => cell); 
+
+            for (const number of cellNumbers){
+                await Client.message.create({
+                    body: messageToSend, 
+                    from: process.env.TWILIO_PHONE_NUMBER, 
+                    to: number
+                })
+            }
+            twiml.message(`The following message has been sent to your contacts: "${messageToSend}"`);
+        } catch (error){
+            console.error('there was an issue sending message from admin phone', error); 
+            twiml.message('Your message failed to send, please try again')
+        }
+    }
 
   // Respond to the sender
   twiml.message('Thank you for your message! We will get back to you soon.');
