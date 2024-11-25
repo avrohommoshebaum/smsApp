@@ -19,7 +19,7 @@ const recieveTextMessage = async  (req, res) => {
     if (incomingMessage.startsWith(sendPrefix)){
         const messageToSend = incomingMessage.slice(sendPrefix.length).trim()
         try{
-            const contacts = await axios.get('/contacts'); 
+            const contacts = await axios.get('https://smsapp-nt34.onrender.com/api/contacts'); 
             const cellNumbers = contacts.data.map(contact => contact.phone.cell).filter(cell => cell); 
 
             for (const number of cellNumbers){
