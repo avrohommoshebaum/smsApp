@@ -10,7 +10,7 @@ const axios = require ('axios')
 
 const sendTestMessage = async (req, res)=>{
     try{
-       const contacts =  await axios.get('http://localhost:3000/api/contacts'); 
+       const contacts =  await axios.get('https://smsapp-nt34.onrender.com/api/contacts'); 
        const cellNumbers = contacts.data.map(contact => contact.phone.cell); 
       console.log(cellNumbers);
       const accountSid = process.env.TWILIO_ACCOUNT_SID;
