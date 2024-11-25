@@ -16,7 +16,7 @@ const recieveTextMessage = async  (req, res) => {
   const adminNumber = '+1 7325514480'; 
   const sendPrefix = 'Send:'; 
 
-    if (senderNumber === adminNumber && incomingMessage.startsWith(sendPrefix)){
+    if (incomingMessage.startsWith(sendPrefix)){
         const messageToSend = incomingMessage.slice(sendPrefix.length).trim()
         try{
             const contacts = await axios.get('/contacts'); 
