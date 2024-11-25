@@ -13,7 +13,7 @@ const recieveTextMessage = async  (req, res) => {
 
   console.log(`Message from ${senderNumber}: ${incomingMessage}`);
 
-  const adminNumber = '7325514480'; 
+  const adminNumber = '+1 7325514480'; 
   const sendPrefix = 'Send:'; 
 
     if (senderNumber === adminNumber && incomingMessage.startsWith(sendPrefix)){
