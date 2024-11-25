@@ -1,7 +1,9 @@
-
+const twilio = require('twilio');
 const { twiml: { MessagingResponse } } = require('twilio');
+require('dotenv').config();
 const Contact = require('../../models/contact');
 const axios = require ('axios'); 
+
 
 
 const recieveTextMessage = async  (req, res) => {
@@ -23,6 +25,9 @@ const recieveTextMessage = async  (req, res) => {
             const cellNumbers = contacts.data.map(contact => contact.phone.cell).filter(cell => cell); 
 
             for (const number of cellNumbers){
+                    const accountSid = process.env.TWILIO_ACCOUNT_SID;
+                    const authToken = process.env.TWILIO_AUTH_TOKEN;
+                    const client = twilio(accountSid, authToken);
                 await Client.message.create({
                     body: messageToSend, 
                     from: process.env.TWILIO_PHONE_NUMBER, 
