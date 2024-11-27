@@ -10,6 +10,7 @@ const recieveTextMessage = async (req, res) => {
   // Extract the message and sender info from the request
   const incomingMessage = req.body.Body; // SMS content
   const senderNumber = req.body.From.replace(/\D/g, ''); // Sanitize sender's phone number
+  console.log(senderNumber); 
 
   console.log(`Message from ${senderNumber}: ${incomingMessage}`);
 
